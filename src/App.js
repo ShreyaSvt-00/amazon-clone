@@ -1,25 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
+import Header from "./components/Header";
+import Home from "./components/Home";
+import Checkout from "./components/Checkout";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Login from "./components/Login";
+import { useStateValue } from "./StateProvider";
+import { auth } from "./firebase";
+
 
 function App() {
+
+const [{},dispatch]=useStateValue();
+
+
+
+
+  // its a listener
+  useEffect(() => {
+    // will only run once when app component loads(kind of like a dynamic if statement in react)
+    // as soon as app loads in firebase attaches this listener
+    auth.onAuthStateChanged((authUser) => {
+
+      console.log("user logged in", authUser);
+      if (authUser) {
+        // it means the user just signed in or was signed in ..keeps you signed in even when
+        // u refresh page
+         dispatch({
+          //  it shoots user in data layer every time they login
+           type:'SET_USER',
+           user:authUser
+         })
+
+
+      }
+      else{
+        // the user is logged out
+        dispatch({
+          
+           type:'SET_USER',
+           user:null
+         }) 
+
+      }
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="app">
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/checkout">
+            <Header />
+            <Checkout />
+          </Route>
+
+          <Route path="/">
+            <Header />
+            {/* keep it always at the bottom otherwise everytime you route to any page it will get rendered */}
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
-
 export default App;
