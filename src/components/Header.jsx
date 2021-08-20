@@ -35,9 +35,9 @@ if(user){
       </div>
 
       
-      <div onClick={handlesigning} className="header_nav">
+      <div  className="header_nav">
       <Link to={!user && "/login"}>
-        <div className="nav">
+        <div className="nav"  onClick={handlesigning}>
           <span className="navoption1">Hello, {!user ? 'Guest' : user.email}</span>
           <span className="navoption2">{user ? 'Sign Out' : 'Sign In'}</span>
         </div>
