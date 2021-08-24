@@ -10,6 +10,8 @@ import { auth } from "./firebase";
 import Payment from "./components/Payment";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import Orders from "./components/Orders";
+
 
 // public key for stripe
 const promise = loadStripe(
@@ -47,6 +49,10 @@ function App() {
     <Router>
       <div className="app">
         <Switch>
+        <Route path="/orders">
+        <Header />
+            <Orders />
+          </Route>
           <Route path="/login">
             <Login />
           </Route>

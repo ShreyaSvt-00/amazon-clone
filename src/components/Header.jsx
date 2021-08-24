@@ -43,11 +43,15 @@ if(user){
         </div>
        </Link>
     
+    <Link to="/orders">
 
-        <div className="nav">
+    <div className="nav">
           <span className="navoption1">Returns</span>
           <span className="navoption2">& Orders</span>
         </div>
+    </Link>
+
+        
 
         <div className="nav">
           <span className="navoption1">Your</span>
